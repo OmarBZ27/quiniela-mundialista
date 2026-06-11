@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Partidos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-3">
+
+        <a href="/" class="btn btn-secondary btn-sm">Inicio</a>
+
+        <a href="/partidos" class="btn btn-primary btn-sm">
+        Partidos
+        </a>
+
+        <a href="/participantes" class="btn btn-success btn-sm">
+        Participantes
+        </a>
+
+    </div>
+
+<div class="container mt-5">
+
+    <h1>Partidos Registrados</h1>
+
+    <a href="/nuevo-partido" class="btn btn-success mb-3">
+        Nuevo Partido
+    </a>
+
+    <table class="table table-bordered">
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Local</th>
+                <th>Visitante</th>
+                <th>Fecha</th>
+                <th>Pronósticos</th>
+                <th>Resultado</th>
+                <th>Ganadores</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for partido in partidos %}
+            <tr>
+                <td>{{ partido[0] }}</td>
+                <td>{{ partido[1] }}</td>
+                <td>{{ partido[2] }}</td>
+                <td>{{ partido[3] }}</td>
+                <td>
+                    <a href="/pronosticos/{{ partido[0] }}"
+                       class="btn btn-primary btn-sm">
+                        Pronósticos
+                    </a>
+                </td>
+                <td>
+                    <a href="/resultado/{{ partido[0] }}"
+                    class="btn btn-success btn-sm">
+                        Resultado
+                </a>
+                </td>
+
+                <td>
+                    <a href="/ganadores/{{ partido[0] }}"
+                    class="btn btn-warning btn-sm">
+                        Ver
+                    </a>
+                </td>
+
+                <td>
+                    <a href="/eliminar-partido/{{ partido[0] }}"
+                       class="btn btn-danger btn-sm">
+                       Eliminar
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</body>
+</html>

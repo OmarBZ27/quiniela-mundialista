@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ganadores</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container mt-3">
+
+        <a href="/" class="btn btn-secondary btn-sm">Inicio</a>
+
+        <a href="/partidos" class="btn btn-primary btn-sm">
+        Partidos
+        </a>
+
+        <a href="/participantes" class="btn btn-success btn-sm">
+        Participantes
+        </a>
+
+    </div>
+
+<div class="container mt-5">
+
+    <h1>
+        {{ partido[1] }} vs {{ partido[2] }}
+    </h1>
+
+    <h3>
+        Resultado: {{ resultado[0] }} - {{ resultado[1] }}
+    </h3>
+
+    <hr>
+
+    {% if ganadores %}
+
+        <h4>Ganadores</h4>
+
+        <ul>
+            {% for ganador in ganadores %}
+                <li>{{ ganador[0] }}</li>
+            {% endfor %}
+        </ul>
+
+    {% else %}
+
+        <div class="alert alert-warning">
+            Nadie acertó este resultado.
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
