@@ -1,52 +1,52 @@
 from db import get_connection
 
-print("Intentando conectar...")
+try:
 
-conexion = get_connection()
+    conexion = get_connection()
+    cursor = conexion.cursor()
 
-print("Conectado correctamente")
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS participantes (
+        id SERIAL PRIMARY KEY,
+        nombre VARCHAR(100) NOT NULL,
+        apellido VARCHAR(100) NOT NULL
+    )
+    """)
 
-cursor = conexion.cursor()
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS partidos (
+        id SERIAL PRIMARY KEY,
+        local VARCHAR(100) NOT NULL,
+        visitante VARCHAR(100) NOT NULL,
+        fecha VARCHAR(100) NOT NULL
+    )
+    """)
 
-print("Creando tablas...")
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS pronosticos (
+        id SERIAL PRIMARY KEY,
+        partido_id INTEGER NOT NULL,
+        participante_id INTEGER NOT NULL,
+        gol_local INTEGER NOT NULL,
+        gol_visitante INTEGER NOT NULL
+    )
+    """)
 
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS participantes (
-    id SERIAL PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    apellido VARCHAR(100) NOT NULL
-)
-""")
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS resultados (
+        id SERIAL PRIMARY KEY,
+        partido_id INTEGER UNIQUE,
+        gol_local INTEGER NOT NULL,
+        gol_visitante INTEGER NOT NULL
+    )
+    """)
 
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS partidos (
-    id SERIAL PRIMARY KEY,
-    local VARCHAR(100) NOT NULL,
-    visitante VARCHAR(100) NOT NULL,
-    fecha VARCHAR(100) NOT NULL
-)
-""")
+    conexion.commit()
+    conexion.close()
 
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS pronosticos (
-    id SERIAL PRIMARY KEY,
-    partido_id INTEGER NOT NULL,
-    participante_id INTEGER NOT NULL,
-    gol_local INTEGER NOT NULL,
-    gol_visitante INTEGER NOT NULL
-)
-""")
+    print("TABLAS CREADAS")
 
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS resultados (
-    id SERIAL PRIMARY KEY,
-    partido_id INTEGER UNIQUE,
-    gol_local INTEGER NOT NULL,
-    gol_visitante INTEGER NOT NULL
-)
-""")
+except Exception as e:
 
-conexion.commit()
-conexion.close()
-
-print("Tablas creadas correctamente")
+    print("ERROR POSTGRES")
+    print(e)
