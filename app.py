@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect
 import sqlite3
 
+app = Flask(__name__)
+
 from db import get_connection
 
 try:
@@ -25,8 +27,6 @@ except Exception as e:
 
     print("ERROR POSTGRES")
     print(e)
-
-app = Flask(__name__)
 
 @app.route("/")
 def inicio():
