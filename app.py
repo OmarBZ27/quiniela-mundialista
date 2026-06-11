@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect
-import sqlite3
+from db import get_connection
 
 app = Flask(__name__)
 
@@ -27,7 +27,7 @@ def lista_partidos():
 @app.route("/participantes", methods=["GET", "POST"])
 def participantes():
 
-    conexion = sqlite3.connect("quiniela.db")
+    conexion = get_connection()
     cursor = conexion.cursor()
 
     if request.method == "POST":
@@ -38,7 +38,7 @@ def participantes():
         cursor.execute("""
             INSERT INTO participantes
             (nombre, apellido)
-            VALUES (?, ?)
+            VALUES (%s, %s)
         """, (
             nombre,
             apellido
@@ -286,11 +286,11 @@ def resultado(partido_id):
 @app.route("/eliminar-participante/<int:id>")
 def eliminar_participante(id):
 
-    conexion = sqlite3.connect("quiniela.db")
+    conexion = get_connection()
     cursor = conexion.cursor()
 
     cursor.execute(
-        "DELETE FROM participantes WHERE id = ?",
+        "DELETE FROM participantes WHERE id = %s",
         (id,)
     )
 
