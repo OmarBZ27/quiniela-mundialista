@@ -10,7 +10,7 @@ def inicio():
 @app.route("/partidos")
 def lista_partidos():
 
-    conexion = sqlite3.connect("quiniela.db")
+    conexion = get_connection()
     cursor = conexion.cursor()
 
     cursor.execute("SELECT * FROM partidos")
@@ -175,12 +175,12 @@ def nuevo_partido():
         visitante = request.form["visitante"]
         fecha = request.form["fecha"]
 
-        conexion = sqlite3.connect("quiniela.db")
+        conexion = get_connection()
         cursor = conexion.cursor()
 
         cursor.execute("""
             INSERT INTO partidos(local, visitante, fecha)
-            VALUES (?, ?, ?)
+            VALUES (%s, %s, %s)
         """, (local, visitante, fecha))
 
         conexion.commit()
@@ -318,21 +318,21 @@ def eliminar_pronostico(id, partido_id):
 @app.route("/eliminar-partido/<int:id>")
 def eliminar_partido(id):
 
-    conexion = sqlite3.connect("quiniela.db")
+    conexion = get_connection()
     cursor = conexion.cursor()
 
     cursor.execute(
-        "DELETE FROM partidos WHERE id = ?",
+        "DELETE FROM partidos WHERE id = %s",
         (id,)
     )
 
     cursor.execute(
-        "DELETE FROM pronosticos WHERE partido_id = ?",
+        "DELETE FROM pronosticos WHERE partido_id = %s",
         (id,)
     )
 
     cursor.execute(
-        "DELETE FROM resultados WHERE partido_id = ?",
+        "DELETE FROM resultados WHERE partido_id = %s",
         (id,)
     )
 
