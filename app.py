@@ -64,7 +64,7 @@ def participantes():
 @app.route("/pronosticos/<int:partido_id>", methods=["GET", "POST"])
 def pronosticos(partido_id):
 
-    conexion = sqlite3.connect("quiniela.db")
+    conexion = get_connection()
     cursor = conexion.cursor()
 
     if request.method == "POST":
@@ -76,79 +76,80 @@ def pronosticos(partido_id):
         cursor.execute("""
             INSERT INTO pronosticos
             (partido_id, participante_id, gol_local, gol_visitante)
-            VALUES (?, ?, ?, ?)
-            """, (
+            VALUES (%s, %s, %s, %s)
+        """, (
             partido_id,
             participante_id,
             gol_local,
             gol_visitante
-                ))
+        ))
 
         conexion.commit()
 
     cursor.execute(
-        "SELECT * FROM partidos WHERE id = ?",
+        "SELECT * FROM partidos WHERE id = %s",
         (partido_id,)
     )
 
     partido = cursor.fetchone()
 
     cursor.execute("""
-    SELECT
-        pronosticos.id,
-        participantes.nombre || ' ' || participantes.apellido,
-        pronosticos.gol_local,
-        pronosticos.gol_visitante
-    FROM pronosticos
-    INNER JOIN participantes
-        ON participantes.id = pronosticos.participante_id
-    WHERE partido_id = ?
+        SELECT
+            pronosticos.id,
+            participantes.nombre || ' ' || participantes.apellido,
+            pronosticos.gol_local,
+            pronosticos.gol_visitante
+        FROM pronosticos
+        INNER JOIN participantes
+            ON participantes.id = pronosticos.participante_id
+        WHERE partido_id = %s
     """, (partido_id,))
 
     pronosticos_lista = cursor.fetchall()
 
     cursor.execute("""
-    SELECT
-    gol_local,
-    gol_visitante,
-    COUNT(*) as cantidad
-    FROM pronosticos
-    WHERE partido_id = ?
-    GROUP BY gol_local, gol_visitante
-    ORDER BY cantidad DESC
+        SELECT
+            gol_local,
+            gol_visitante,
+            COUNT(*) as cantidad
+        FROM pronosticos
+        WHERE partido_id = %s
+        GROUP BY gol_local, gol_visitante
+        ORDER BY cantidad DESC
     """, (partido_id,))
 
     estadisticas = cursor.fetchall()
 
     cursor.execute("""
-    SELECT COUNT(*)
-    FROM pronosticos
-    WHERE partido_id = ?
+        SELECT COUNT(*)
+        FROM pronosticos
+        WHERE partido_id = %s
     """, (partido_id,))
 
     total_pronosticos = cursor.fetchone()[0]
 
     cursor.execute("""
-    SELECT id,
-           nombre,
-           apellido
-    FROM participantes
-    ORDER BY apellido, nombre
+        SELECT
+            id,
+            nombre,
+            apellido
+        FROM participantes
+        ORDER BY apellido, nombre
     """)
 
     participantes = cursor.fetchall()
 
     cursor.execute("""
-    SELECT
-        nombre,
-        apellido
-    FROM participantes
-    WHERE id NOT IN (
-        SELECT participante_id
-        FROM pronosticos
-        WHERE partido_id = ?
-    )
-    ORDER BY apellido, nombre
+        SELECT
+            nombre,
+            apellido
+        FROM participantes
+        WHERE id NOT IN (
+            SELECT participante_id
+            FROM pronosticos
+            WHERE partido_id = %s
+        )
+        ORDER BY apellido, nombre
     """, (partido_id,))
 
     faltantes = cursor.fetchall()
@@ -164,7 +165,6 @@ def pronosticos(partido_id):
         total_pronosticos=total_pronosticos,
         faltantes=faltantes
     )
-
 
 @app.route("/nuevo-partido", methods=["GET", "POST"])
 def nuevo_partido():
