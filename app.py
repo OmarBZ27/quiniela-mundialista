@@ -364,7 +364,27 @@ def eliminar_partido(id):
     conexion.commit()
     conexion.close()
 
-    return redirect("/partidos")
+    return redirect("/partidos")    
+
+@app.route("/test-postgres")
+def test_postgres():
+
+        from db import get_connection
+
+        conexion = get_connection()
+        cursor = conexion.cursor()
+
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS prueba (
+            id SERIAL PRIMARY KEY,
+            nombre VARCHAR(50)
+        )
+        """)
+
+        conexion.commit()
+        conexion.close()
+
+        return "Tabla creada correctamente"
 
 if __name__ == "__main__":
     app.run(debug=True)
