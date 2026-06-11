@@ -3,31 +3,6 @@ import sqlite3
 
 app = Flask(__name__)
 
-from db import get_connection
-
-try:
-
-    conexion = get_connection()
-    cursor = conexion.cursor()
-
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS participantes (
-        id SERIAL PRIMARY KEY,
-        nombre VARCHAR(100) NOT NULL,
-        apellido VARCHAR(100) NOT NULL
-    )
-    """)
-
-    conexion.commit()
-    conexion.close()
-
-    print("POSTGRES OK")
-
-except Exception as e:
-
-    print("ERROR POSTGRES")
-    print(e)
-
 @app.route("/")
 def inicio():
     return render_template("index.html")
@@ -365,26 +340,6 @@ def eliminar_partido(id):
     conexion.close()
 
     return redirect("/partidos")    
-
-@app.route("/test-postgres")
-def test_postgres():
-
-        from db import get_connection
-
-        conexion = get_connection()
-        cursor = conexion.cursor()
-
-        cursor.execute("""
-        CREATE TABLE IF NOT EXISTS prueba (
-            id SERIAL PRIMARY KEY,
-            nombre VARCHAR(50)
-        )
-        """)
-
-        conexion.commit()
-        conexion.close()
-
-        return "Tabla creada correctamente"
 
 if __name__ == "__main__":
     app.run(debug=True)
