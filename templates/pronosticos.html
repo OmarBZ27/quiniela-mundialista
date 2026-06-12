@@ -3,155 +3,218 @@
 <head>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Pronósticos</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
-    <div class="container mt-3">
 
-        <a href="/" class="btn btn-secondary btn-sm">Inicio</a>
+<div class="container mt-3">
 
-        <a href="/partidos" class="btn btn-primary btn-sm">
-        Partidos
+    <div class="d-grid gap-2">
+
+        <a href="/" class="btn btn-secondary">
+            🏠 Inicio
         </a>
 
-        <a href="/participantes" class="btn btn-success btn-sm">
-        Participantes
+        <a href="/partidos" class="btn btn-primary">
+            ⚽ Partidos
+        </a>
+
+        <a href="/participantes" class="btn btn-success">
+            👥 Participantes
         </a>
 
     </div>
 
-<div class="container mt-5">
+</div>
 
-    <h1>{{ partido[1] }} vs {{ partido[2] }}</h1>
+<div class="container mt-4">
 
-    <form method="POST">
+    <div class="card mb-4">
 
-        <div class="row">
+        <div class="card-body text-center">
 
-            <div class="col-md-4">
-                <select name="participante_id"
-                        class="form-control"
-                        required>
+            <h2>
+                ⚽ {{ partido[1] }}
+            </h2>
 
-                    <option value="">
-                        Seleccione participante
-                    </option>
+            <h4>vs</h4>
 
-                    {% for participante in participantes %}
-                    <option value="{{ participante[0] }}">
-                        {{ participante[1] }} {{ participante[2] }}
-                    </option>
-                    {% endfor %}
+            <h2>
+                ⚽ {{ partido[2] }}
+            </h2>
 
-                </select>
-            </div>
+        </div>
 
-            <div class="col-md-2">
-                <input type="number"
-                       name="gol_local"
-                       class="form-control"
-                       placeholder="Local"
-                       required>
-            </div>
+    </div>
 
-            <div class="col-md-2">
-                <input type="number"
-                       name="gol_visitante"
-                       class="form-control"
-                       placeholder="Visitante"
-                       required>
-            </div>
+    <div class="card mb-4">
 
-            <div class="col-md-2">
-                <button class="btn btn-success">
-                    Guardar
-                </button>
+        <div class="card-header">
+            Nuevo Pronóstico
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST">
+
+                <div class="mb-3">
+
+                    <select name="participante_id"
+                            class="form-select"
+                            required>
+
+                        <option value="">
+                            Seleccione participante
+                        </option>
+
+                        {% for participante in participantes %}
+                        <option value="{{ participante[0] }}">
+                            {{ participante[1] }} {{ participante[2] }}
+                        </option>
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-6">
+
+                        <input type="number"
+                               name="gol_local"
+                               class="form-control"
+                               placeholder="{{ partido[1] }}"
+                               required>
+
+                    </div>
+
+                    <div class="col-6">
+
+                        <input type="number"
+                               name="gol_visitante"
+                               class="form-control"
+                               placeholder="{{ partido[2] }}"
+                               required>
+
+                    </div>
+
+                </div>
+
+                <div class="d-grid mt-3">
+
+                    <button class="btn btn-success btn-lg">
+                        Guardar Pronóstico
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <div class="alert alert-info text-center">
+
+        📊 Total de pronósticos:
+        <strong>{{ total_pronosticos }}</strong>
+
+    </div>
+
+    <h3 class="mb-3">
+        Pronósticos Registrados
+    </h3>
+
+    {% for p in pronosticos %}
+
+    <div class="card mb-2">
+
+        <div class="card-body">
+
+            <h5>
+                {{ p[1] }}
+            </h5>
+
+            <p class="mb-2">
+
+                Pronóstico:
+                <strong>{{ p[2] }} - {{ p[3] }}</strong>
+
+            </p>
+
+            <a href="/eliminar-pronostico/{{ p[0] }}/{{ partido[0] }}"
+               class="btn btn-danger btn-sm">
+
+                Eliminar
+
+            </a>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+    <hr>
+
+    <h3>
+        📈 Estadísticas
+    </h3>
+
+    {% for e in estadisticas %}
+
+    <div class="card mb-2">
+
+        <div class="card-body d-flex justify-content-between">
+
+            <strong>
+                {{ e[0] }} - {{ e[1] }}
+            </strong>
+
+            <span class="badge bg-primary">
+                {{ e[2] }}
+            </span>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+    <hr>
+
+    <h3>
+        ⏳ Faltan por pronosticar
+    </h3>
+
+    {% if faltantes %}
+
+        {% for f in faltantes %}
+
+        <div class="card mb-2">
+
+            <div class="card-body">
+
+                {{ f[0] }} {{ f[1] }}
+
             </div>
 
         </div>
 
-    </form>
-
-    <hr>
-
-    <div class="alert alert-info">
-    Total de pronósticos: {{ total_pronosticos }}
-    </div>
-
-    <table class="table">
-
-        <thead>
-            <tr>
-                <th>Participante</th>
-                <th>Pronóstico</th>
-                <th>Accion</th>
-            </tr>
-        </thead>
-
-        <tbody>
-
-            {% for p in pronosticos %}
-            <tr>
-                <td>{{ p[1] }}</td>
-                <td>{{ p[2] }} - {{ p[3] }}</td>
-
-                <td>
-                    <a href="/eliminar-pronostico/{{ p[0] }}/{{ partido[0] }}"
-                       class="btn btn-danger btn-sm">
-                       Eliminar
-                    </a>
-                </td>
-            </tr>
-            {% endfor %}
-
-        </tbody>
-
-    </table>
-
-    <hr>
-
-    <h3>Estadísticas</h3>
-
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Pronóstico</th>
-                <th>Cantidad</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            {% for e in estadisticas %}
-            <tr>
-                <td>{{ e[0] }} - {{ e[1] }}</td>
-                <td>{{ e[2] }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <hr>
-
-    <h3>Faltan por pronosticar</h3>
-
-    {% if faltantes %}
-
-    <ul class="list-group">
-
-        {% for f in faltantes %}
-        <li class="list-group-item">
-            {{ f[0] }} {{ f[1] }}
-        </li>
         {% endfor %}
-
-    </ul>
 
     {% else %}
 
-    <div class="alert alert-success">
-        Todos los participantes ya enviaron su pronóstico.
-    </div>
+        <div class="alert alert-success">
+
+            ✅ Todos los participantes ya enviaron su pronóstico.
+
+        </div>
 
     {% endif %}
 
