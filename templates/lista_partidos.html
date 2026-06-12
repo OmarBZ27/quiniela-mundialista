@@ -1,39 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends "base.html" %}
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% block titulo %}
+Partidos
+{% endblock %}
 
-    <title>Partidos</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-
-</head>
-<body>
-
-<div class="container mt-3">
-
-    <div class="d-grid gap-2">
-
-        <a href="/" class="btn btn-secondary">
-            🏠 Inicio
-        </a>
-
-        <a href="/partidos" class="btn btn-primary">
-            ⚽ Partidos
-        </a>
-
-        <a href="/participantes" class="btn btn-success">
-            👥 Participantes
-        </a>
-
-    </div>
-
-</div>
+{% block contenido %}
 
 <div class="container mt-4">
 
-    <h1 class="text-center mb-4">
+    <h1 class="text-center mb-4 text-white">
         ⚽ Partidos Registrados
     </h1>
 
@@ -50,21 +25,21 @@
 
     {% for partido in partidos %}
 
-    <div class="card mb-3 shadow-sm">
+    <div class="card mb-3">
 
         <div class="card-body">
 
-            <h4 class="card-title">
+            <h4 class="card-title text-center">
 
                 {{ partido[1] }}
                 <br>
-                vs
+                <span class="text-muted">VS</span>
                 <br>
                 {{ partido[2] }}
 
             </h4>
 
-            <p class="card-text">
+            <p class="card-text text-center">
 
                 📅 {{ partido[3] }}
 
@@ -107,9 +82,26 @@
 
     </div>
 
+    {% else %}
+
+    <div class="card">
+
+        <div class="card-body text-center">
+
+            <h5>
+                No hay partidos registrados
+            </h5>
+
+            <p class="text-muted">
+                Presiona "Nuevo Partido" para crear el primero.
+            </p>
+
+        </div>
+
+    </div>
+
     {% endfor %}
 
 </div>
 
-</body>
-</html>
+{% endblock %}
