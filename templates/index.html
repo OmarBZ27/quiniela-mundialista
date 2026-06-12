@@ -1,88 +1,97 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <title>Quiniela Mundialista</title>
+{% extends "base.html" %}
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+{% block titulo %}
+Inicio
+{% endblock %}
 
-<div class="container mt-5">
+{% block contenido %}
 
-    <h1 class="text-center">
-        🏆 Quiniela Mundialista 2026
-    </h1>
+<div class="text-center mb-4">
 
-    <p class="text-center text-muted">
-        Panel principal
+    <h2 class="text-white">
+        Bienvenido a la Quiniela Mundialista
+    </h2>
+
+    <p class="text-white-50">
+        Administra partidos, participantes y resultados del Mundial 2026.
     </p>
 
-    <hr>
+</div>
 
-    <div class="row mt-4">
+<div class="row g-4">
 
-        <div class="col-md-3">
-            <div class="card h-100">
-                <div class="card-body text-center">
-                    <h5>⚽ Partidos</h5>
-                    <p>Administrar partidos.</p>
+    <div class="col-md-6">
 
-                    <a href="/partidos"
-                       class="btn btn-primary">
-                        Abrir
-                    </a>
-                </div>
+        <div class="card h-100">
+
+            <div class="card-body text-center">
+
+                <h3>
+                    ⚽ Partidos
+                </h3>
+
+                <p class="text-muted">
+                    Crear partidos, registrar resultados y consultar ganadores.
+                </p>
+
+                <a href="/partidos"
+                   class="btn btn-primary btn-lg">
+
+                    Abrir
+
+                </a>
+
             </div>
+
         </div>
 
-        <div class="col-md-3">
-            <div class="card h-100">
-                <div class="card-body text-center">
-                    <h5>👥 Participantes</h5>
-                    <p>Gestionar participantes.</p>
+    </div>
 
-                    <a href="/participantes"
-                       class="btn btn-success">
-                        Abrir
-                    </a>
-                </div>
+    <div class="col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-body text-center">
+
+                <h3>
+                    👥 Participantes
+                </h3>
+
+                <p class="text-muted">
+                    Administrar participantes de la quiniela.
+                </p>
+
+                <a href="/participantes"
+                   class="btn btn-success btn-lg">
+
+                    Abrir
+
+                </a>
+
             </div>
-        </div>
 
-        <div class="col-md-3">
-            <div class="card h-100">
-                <div class="card-body text-center">
-                    <h5>🏅 Tabla General</h5>
-                    <p>Clasificación de puntos.</p>
-
-                    <a href="#"
-                       class="btn btn-warning">
-                        Próximamente
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card h-100">
-                <div class="card-body text-center">
-                    <h5>🎯 Ganadores</h5>
-                    <p>Ganadores por partido.</p>
-
-                    <a href="/partidos"
-                       class="btn btn-info">
-                        Ver Partidos
-                    </a>
-                </div>
-            </div>
         </div>
 
     </div>
 
 </div>
 
-</body>
-</html>
+<div class="card mt-4">
+
+    <div class="card-body text-center">
+
+        <h4>
+            🏆 Mundial 2026
+        </h4>
+
+        <p class="mb-0 text-muted">
+
+            México 🇲🇽 · Estados Unidos 🇺🇸 · Canadá 🇨🇦
+
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}
