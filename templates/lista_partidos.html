@@ -3,87 +3,111 @@
 <head>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Partidos</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
-    <div class="container mt-3">
 
-        <a href="/" class="btn btn-secondary btn-sm">Inicio</a>
+<div class="container mt-3">
 
-        <a href="/partidos" class="btn btn-primary btn-sm">
-        Partidos
+    <div class="d-grid gap-2">
+
+        <a href="/" class="btn btn-secondary">
+            🏠 Inicio
         </a>
 
-        <a href="/participantes" class="btn btn-success btn-sm">
-        Participantes
+        <a href="/partidos" class="btn btn-primary">
+            ⚽ Partidos
+        </a>
+
+        <a href="/participantes" class="btn btn-success">
+            👥 Participantes
         </a>
 
     </div>
 
-<div class="container mt-5">
+</div>
 
-    <h1>Partidos Registrados</h1>
+<div class="container mt-4">
 
-    <a href="/nuevo-partido" class="btn btn-success mb-3">
-        Nuevo Partido
-    </a>
+    <h1 class="text-center mb-4">
+        ⚽ Partidos Registrados
+    </h1>
 
-    <table class="table table-bordered">
+    <div class="d-grid mb-4">
 
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Local</th>
-                <th>Visitante</th>
-                <th>Fecha</th>
-                <th>Pronósticos</th>
-                <th>Resultado</th>
-                <th>Ganadores</th>
-                <th>Eliminar</th>
-            </tr>
-        </thead>
+        <a href="/nuevo-partido"
+           class="btn btn-success btn-lg">
 
-        <tbody>
+            ➕ Nuevo Partido
 
-            {% for partido in partidos %}
-            <tr>
-                <td>{{ partido[0] }}</td>
-                <td>{{ partido[1] }}</td>
-                <td>{{ partido[2] }}</td>
-                <td>{{ partido[3] }}</td>
-                <td>
-                    <a href="/pronosticos/{{ partido[0] }}"
-                       class="btn btn-primary btn-sm">
-                        Pronósticos
-                    </a>
-                </td>
-                <td>
-                    <a href="/resultado/{{ partido[0] }}"
-                    class="btn btn-success btn-sm">
-                        Resultado
+        </a>
+
+    </div>
+
+    {% for partido in partidos %}
+
+    <div class="card mb-3 shadow-sm">
+
+        <div class="card-body">
+
+            <h4 class="card-title">
+
+                {{ partido[1] }}
+                <br>
+                vs
+                <br>
+                {{ partido[2] }}
+
+            </h4>
+
+            <p class="card-text">
+
+                📅 {{ partido[3] }}
+
+            </p>
+
+            <div class="d-grid gap-2">
+
+                <a href="/pronosticos/{{ partido[0] }}"
+                   class="btn btn-primary">
+
+                    Pronósticos
+
                 </a>
-                </td>
 
-                <td>
-                    <a href="/ganadores/{{ partido[0] }}"
-                    class="btn btn-warning btn-sm">
-                        Ver
-                    </a>
-                </td>
+                <a href="/resultado/{{ partido[0] }}"
+                   class="btn btn-success">
 
-                <td>
-                    <a href="/eliminar-partido/{{ partido[0] }}"
-                       class="btn btn-danger btn-sm">
-                       Eliminar
-                    </a>
-                </td>
-            </tr>
-            {% endfor %}
+                    Resultado
 
-        </tbody>
+                </a>
 
-    </table>
+                <a href="/ganadores/{{ partido[0] }}"
+                   class="btn btn-warning">
+
+                    Ganadores
+
+                </a>
+
+                <a href="/eliminar-partido/{{ partido[0] }}"
+                   class="btn btn-danger"
+                   onclick="return confirm('¿Eliminar este partido?')">
+
+                    Eliminar
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
 
 </div>
 
