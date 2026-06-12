@@ -1,62 +1,96 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends "base.html" %}
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Resultado</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+{% block titulo %}
+Resultado
+{% endblock %}
 
-    <div class="container mt-3">
+{% block contenido %}
 
-        <a href="/" class="btn btn-secondary btn-sm">Inicio</a>
+<div class="container mt-4">
 
-        <a href="/partidos" class="btn btn-primary btn-sm">
-        Partidos
-        </a>
+    <h1 class="text-center text-white mb-4">
+        🏁 Resultado Oficial
+    </h1>
 
-        <a href="/participantes" class="btn btn-success btn-sm">
-        Participantes
-        </a>
+    <div class="card">
 
-    </div>
+        <div class="card-body">
 
-<div class="container mt-5">
+            <h3 class="text-center mb-4">
 
-    <h1>{{ partido[1] }} vs {{ partido[2] }}</h1>
+                {{ partido[1] }}
 
-    <form method="POST">
+                <div class="my-2">
+                    <span class="badge bg-primary fs-6">
+                        VS
+                    </span>
+                </div>
 
-        <div class="row">
+                {{ partido[2] }}
 
-            <div class="col-md-3">
-                <label>Goles Local</label>
-                <input type="number"
-                       name="gol_local"
-                       class="form-control"
-                       required>
-            </div>
+            </h3>
 
-            <div class="col-md-3">
-                <label>Goles Visitante</label>
-                <input type="number"
-                       name="gol_visitante"
-                       class="form-control"
-                       required>
-            </div>
+            <form method="POST">
+
+                <div class="row justify-content-center">
+
+                    <div class="col-5 col-md-3">
+
+                        <label class="form-label text-center d-block">
+                            {{ partido[1] }}
+                        </label>
+
+                        <input type="number"
+                               name="gol_local"
+                               class="form-control form-control-lg text-center"
+                               min="0"
+                               required>
+
+                    </div>
+
+                    <div class="col-2 text-center align-self-center">
+
+                        <h2>-</h2>
+
+                    </div>
+
+                    <div class="col-5 col-md-3">
+
+                        <label class="form-label text-center d-block">
+                            {{ partido[2] }}
+                        </label>
+
+                        <input type="number"
+                               name="gol_visitante"
+                               class="form-control form-control-lg text-center"
+                               min="0"
+                               required>
+
+                    </div>
+
+                </div>
+
+                <div class="d-grid gap-2 mt-4">
+
+                    <button class="btn btn-success btn-lg">
+                        💾 Guardar Resultado
+                    </button>
+
+                    <a href="/partidos"
+                       class="btn btn-secondary">
+
+                        ← Volver a Partidos
+
+                    </a>
+
+                </div>
+
+            </form>
 
         </div>
 
-        <br>
-
-        <button class="btn btn-success">
-            Guardar Resultado
-        </button>
-
-    </form>
+    </div>
 
 </div>
 
-</body>
-</html>
+{% endblock %}
