@@ -196,11 +196,11 @@ def nuevo_partido():
 @app.route("/ganadores/<int:partido_id>")
 def ganadores(partido_id):
 
-    conexion = sqlite3.connect("quiniela.db")
+    conexion = get_connection()
     cursor = conexion.cursor()
 
     cursor.execute(
-        "SELECT * FROM partidos WHERE id = ?",
+        "SELECT * FROM partidos WHERE id = %s",
         (partido_id,)
     )
 
@@ -210,7 +210,7 @@ def ganadores(partido_id):
         SELECT gol_local,
                gol_visitante
         FROM resultados
-        WHERE partido_id = ?
+        WHERE partido_id = %s
     """, (partido_id,))
 
     resultado = cursor.fetchone()
@@ -225,9 +225,9 @@ def ganadores(partido_id):
         FROM pronosticos
         INNER JOIN participantes
             ON participantes.id = pronosticos.participante_id
-        WHERE partido_id = ?
-          AND pronosticos.gol_local = ?
-          AND pronosticos.gol_visitante = ?
+        WHERE partido_id = %s
+          AND pronosticos.gol_local = %s
+          AND pronosticos.gol_visitante = %s
     """, (
         partido_id,
         resultado[0],
@@ -307,11 +307,11 @@ def eliminar_participante(id):
 @app.route("/eliminar-pronostico/<int:id>/<int:partido_id>")
 def eliminar_pronostico(id, partido_id):
 
-    conexion = sqlite3.connect("quiniela.db")
+    conexion = get_connection()
     cursor = conexion.cursor()
 
     cursor.execute(
-        "DELETE FROM pronosticos WHERE id = ?",
+        "DELETE FROM pronosticos WHERE id = %s",
         (id,)
     )
 
