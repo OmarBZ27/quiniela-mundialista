@@ -1,95 +1,126 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends "base.html" %}
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Participantes</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+{% block titulo %}
+Participantes
+{% endblock %}
 
-    <div class="container mt-3">
+{% block contenido %}
 
-        <a href="/" class="btn btn-secondary btn-sm">Inicio</a>
+<div class="container mt-4">
 
-        <a href="/partidos" class="btn btn-primary btn-sm">
-        Partidos
-        </a>
+    <h1 class="text-center mb-4 text-white">
+        👥 Participantes
+    </h1>
 
-        <a href="/participantes" class="btn btn-success btn-sm">
-        Participantes
-        </a>
+    <div class="card mb-4">
+
+        <div class="card-body">
+
+            <h4 class="mb-3">
+                ➕ Agregar Participante
+            </h4>
+
+            <form method="POST">
+
+                <div class="row g-3">
+
+                    <div class="col-md-5">
+
+                        <input type="text"
+                               name="nombre"
+                               class="form-control"
+                               placeholder="Nombre"
+                               required>
+
+                    </div>
+
+                    <div class="col-md-5">
+
+                        <input type="text"
+                               name="apellido"
+                               class="form-control"
+                               placeholder="Apellido"
+                               required>
+
+                    </div>
+
+                    <div class="col-md-2 d-grid">
+
+                        <button class="btn btn-success">
+                            Agregar
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
 
     </div>
 
-<div class="container mt-5">
+    <div class="card">
 
-    <h1>Participantes</h1>
+        <div class="card-body">
 
-    <form method="POST">
+            <h4 class="mb-3">
+                Lista de Participantes
+            </h4>
 
-        <div class="row">
+            <div class="table-responsive">
 
-            <div class="col-md-4">
-                <input type="text"
-                       name="nombre"
-                       class="form-control"
-                       placeholder="Nombre"
-                       required>
-            </div>
+                <table class="table table-striped table-bordered align-middle">
 
-            <div class="col-md-4">
-                <input type="text"
-                       name="apellido"
-                       class="form-control"
-                       placeholder="Apellido"
-                       required>
-            </div>
+                    <thead class="table-dark">
 
-            <div class="col-md-4">
-                <button class="btn btn-success">
-                    Agregar
-                </button>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Acción</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for p in participantes %}
+
+                        <tr>
+
+                            <td>{{ p[0] }}</td>
+
+                            <td>{{ p[1] }}</td>
+
+                            <td>{{ p[2] }}</td>
+
+                            <td>
+
+                                <a href="/eliminar-participante/{{ p[0] }}"
+                                   class="btn btn-danger btn-sm"
+                                   onclick="return confirm('¿Eliminar participante?')">
+
+                                    Eliminar
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
             </div>
 
         </div>
 
-    </form>
-
-    <hr>
-
-    <table class="table">
-
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Accion</th>
-            </tr>
-        </thead>
-
-        <tbody>
-
-            {% for p in participantes %}
-            <tr>
-                <td>{{ p[0] }}</td>
-                <td>{{ p[1] }}</td>
-                <td>{{ p[2] }}</td>
-                <td>
-                    <a href="/eliminar-participante/{{ p[0] }}"
-                       class="btn btn-danger btn-sm">
-                       Eliminar
-                    </a>
-                </td>
-            </tr>
-            {% endfor %}
-
-        </tbody>
-
-    </table>
+    </div>
 
 </div>
 
-</body>
-</html>
+{% endblock %}
