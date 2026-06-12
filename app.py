@@ -85,6 +85,9 @@ def pronosticos(partido_id):
         ))
 
         conexion.commit()
+        conexion.close()
+
+        return redirect(f"/pronosticos/{partido_id}")
 
     cursor.execute(
         "SELECT * FROM partidos WHERE id = %s",
@@ -245,7 +248,7 @@ def ganadores(partido_id):
 @app.route("/resultado/<int:partido_id>", methods=["GET", "POST"])
 def resultado(partido_id):
 
-    conexion = sqlite3.connect("quiniela.db")
+    conexion = get_connection()
     cursor = conexion.cursor()
 
     if request.method == "POST":
@@ -254,9 +257,13 @@ def resultado(partido_id):
         gol_visitante = request.form["gol_visitante"]
 
         cursor.execute("""
-            INSERT OR REPLACE INTO resultados
+            INSERT INTO resultados
             (partido_id, gol_local, gol_visitante)
-            VALUES (?, ?, ?)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (partido_id)
+            DO UPDATE SET
+                gol_local = EXCLUDED.gol_local,
+                gol_visitante = EXCLUDED.gol_visitante
         """, (
             partido_id,
             gol_local,
@@ -264,13 +271,12 @@ def resultado(partido_id):
         ))
 
         conexion.commit()
-
         conexion.close()
 
         return redirect("/partidos")
 
     cursor.execute(
-        "SELECT * FROM partidos WHERE id = ?",
+        "SELECT * FROM partidos WHERE id = %s",
         (partido_id,)
     )
 
@@ -282,7 +288,6 @@ def resultado(partido_id):
         "resultado.html",
         partido=partido
     )
-
 @app.route("/eliminar-participante/<int:id>")
 def eliminar_participante(id):
 
