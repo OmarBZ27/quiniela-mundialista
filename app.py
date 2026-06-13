@@ -17,6 +17,20 @@ def lista_partidos():
 
     partidos = cursor.fetchall()
 
+    partidos_formateados = []
+
+    for p in partidos:
+
+        fecha = datetime.strptime(p[3], "%Y-%m-%d")
+
+        fecha_bonita = fecha.strftime("%d-%m-%Y")
+
+        partidos_formateados.append(
+            (p[0], p[1], p[2], fecha_bonita)
+        )
+
+    partidos = partidos_formateados
+
     conexion.close()
 
     return render_template(
