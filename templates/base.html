@@ -107,8 +107,10 @@
             background:
             linear-gradient(
                 90deg,
-                rgba(255,77,77,.95),
-                rgba(139,92,246,.95)
+                #FF4D4D,
+                #8d5cf6,
+                #00D4C8,
+                #AAFF00
             );
 
             border:none;
@@ -149,6 +151,67 @@
 
         .table{
             background:white;
+        }
+
+        .partido-card{
+
+            position:relative;
+            overflow:hidden;
+            border:none;
+            border-radius:32px;
+            background:white;
+            box-shadow:
+            0 8px 20px rgba(0,0,0,.8);
+        }
+
+        .partido-card::after{
+            content:"";
+            position:absolute;
+            left:0;
+            right:0;
+            bottom:0;
+
+            height:8px;
+
+            background:
+            linear-gradient(
+                90deg,
+                #FF4D4D,
+                #8d5cf6,
+                #00D4C8,
+                #AAFF00
+            );
+        }
+
+        .equipo{
+
+            font-family:'Barlow Condensed',sans-serif;
+            font-size:2rem;
+            font-weight:800;
+            text-transform:uppercase;
+            
+        }
+
+        .vs{
+
+            font-family:"Barlow Condensed",sans-serif;
+            font-size:2rem;
+            color:#6b7280;
+            font-weight:700;
+        }
+
+        .fecha.partido{
+
+            font-size:.9rem;
+            color:#6b7280;
+            font-weight:600;    
+        }
+
+        .boton-fila{
+
+            display:grid;
+            grid-template-columns:1fr 1 fr;
+            gap:10px;
         }
 
     </style>

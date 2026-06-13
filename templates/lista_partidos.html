@@ -8,7 +8,7 @@ Partidos
 
 <div class="container mt-4">
 
-    <h1 class="text-center mb-4 text-white">
+    <h1 class="text-center mb-4 titulo-principal">
         ⚽ Partidos Registrados
     </h1>
 
@@ -25,64 +25,87 @@ Partidos
 
     {% for partido in partidos %}
 
-    <div class="card mb-3">
+<div class="partido-card mb-4">
 
-        <div class="card-body">
+    <div class="card-body">
 
-            <h4 class="card-title text-center">
+        <div class="text-center mb-3">
 
-                {{ partido[1] }}
-                <br>
-                <span class="text-muted">VS</span>
-                <br>
-                {{ partido[2] }}
-
-            </h4>
-
-            <p class="card-text text-center">
-
+            <div class="fecha-partido">
                 📅 {{ partido[3] }}
+            </div>
 
-            </p>
+        </div>
 
-            <div class="d-grid gap-2">
+        <div class="row align-items-center text-center">
 
-                <a href="/pronosticos/{{ partido[0] }}"
-                   class="btn btn-primary">
+            <div class="col-5">
 
-                    Pronósticos
+                <div class="equipo">
+                    {{ partido[1] }}
+                </div>
 
-                </a>
+            </div>
 
-                <a href="/resultado/{{ partido[0] }}"
-                   class="btn btn-success">
+            <div class="col-2">
 
-                    Resultado
+                <div class="vs">
+                    VS
+                </div>
 
-                </a>
+            </div>
 
-                <a href="/ganadores/{{ partido[0] }}"
-                   class="btn btn-warning">
+            <div class="col-5">
 
-                    Ganadores
-
-                </a>
-
-                <a href="/eliminar-partido/{{ partido[0] }}"
-                   class="btn btn-danger"
-                   onclick="return confirm('¿Eliminar este partido?')">
-
-                    Eliminar
-
-                </a>
+                <div class="equipo">
+                    {{ partido[2] }}
+                </div>
 
             </div>
 
         </div>
 
+        <hr>
+
+        <div class="boton-fila">
+
+            <a href="/pronosticos/{{ partido[0] }}"
+               class="btn btn-primary">
+
+                Pronósticos
+
+            </a>
+
+            <a href="/resultado/{{ partido[0] }}"
+               class="btn btn-success">
+
+                Resultado
+
+            </a>
+
+            <a href="/ganadores/{{ partido[0] }}"
+               class="btn btn-warning">
+
+                Ganadores
+
+            </a>
+
+            <a href="/eliminar-partido/{{ partido[0] }}"
+               class="btn btn-danger"
+               onclick="return confirm('¿Eliminar este partido?')">
+
+                Eliminar
+
+            </a>
+
+        </div>
+
     </div>
 
-    {% else %}
+</div>
+
+{% else %}
+
 
     <div class="card">
 
