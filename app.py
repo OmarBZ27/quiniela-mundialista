@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from db import get_connection
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -21,9 +22,7 @@ def lista_partidos():
 
     for p in partidos:
 
-        fecha = datetime.strptime(p[3], "%Y-%m-%d")
-
-        fecha_bonita = fecha.strftime("%d-%m-%Y")
+        fecha_bonita = p[3].strftime("%d-%m-%Y")
 
         partidos_formateados.append(
             (p[0], p[1], p[2], fecha_bonita)
