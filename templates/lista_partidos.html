@@ -65,33 +65,35 @@ Partidos
 
         </div>
 
-        <hr>
-
-        <div class="boton-fila">
-
-            <a href="/pronosticos/{{ partido[0] }}"
-               class="btn btn-primary">
-
-                Pronósticos
-
-            </a>
+        <div class="text-center my-3">
 
             <a href="/resultado/{{ partido[0] }}"
-               class="btn btn-success">
+            class="btn boton-resultado">
 
                 Resultado
 
             </a>
 
+        </div>
+
+        <div class="boton-fila">
+
+            <a href="/pronosticos/{{ partido[0] }}"
+               class="btn btn-principal">
+
+                Pronósticos
+
+            </a>
+
             <a href="/ganadores/{{ partido[0] }}"
-               class="btn btn-warning">
+               class="btn btn-principal">
 
                 Ganadores
 
             </a>
 
             <a href="/eliminar-partido/{{ partido[0] }}"
-               class="btn btn-danger"
+               class="btn btn-principal"
                onclick="return confirm('¿Eliminar este partido?')">
 
                 Eliminar
