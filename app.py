@@ -32,7 +32,7 @@ def lista_partidos():
 
     conexion.close()
 
-    return render_template(
+    return render_template( 
         "lista_partidos.html",
         partidos=partidos
     )
