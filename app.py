@@ -14,6 +14,8 @@ def lista_partidos():
     conexion = get_connection()
     cursor = conexion.cursor()
 
+    from datetime import datetime
+
     cursor.execute("SELECT * FROM partidos")
 
     partidos = cursor.fetchall()
@@ -22,7 +24,10 @@ def lista_partidos():
 
     for p in partidos:
 
-        fecha_bonita = p[3].strftime("%d-%m-%Y")
+        fecha_bonita = datetime.strptime(
+            p[3],
+            "%Y-%m-%d"
+        ).strftime("%d/%m/%Y")
 
         partidos_formateados.append(
             (p[0], p[1], p[2], fecha_bonita)
