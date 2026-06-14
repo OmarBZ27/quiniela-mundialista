@@ -1,51 +1,26 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends "base.html" %}
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% block titulo %}
+Partidos
+{% endblock %}
 
-    <title>Pronósticos</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-
-</head>
-<body>
-
-<div class="container mt-3">
-
-    <div class="d-grid gap-2">
-
-        <a href="/" class="btn btn-secondary">
-            🏠 Inicio
-        </a>
-
-        <a href="/partidos" class="btn btn-primary">
-            ⚽ Partidos
-        </a>
-
-        <a href="/participantes" class="btn btn-success">
-            👥 Participantes
-        </a>
-
-    </div>
-
-</div>
+{% block contenido %}
 
 <div class="container mt-4">
 
-    <div class="card mb-4">
+    <div class="card mb-4 partido-card">
 
         <div class="card-body text-center">
 
-            <h2 class="text-center">
+            <h2 class="equipo text-center">
                  {{ partido[1] }}
             </h2>
 
-            <h4 class="text-center text-muted">
+            <h4 class="vs text-center">
                 VS
             </h4>
 
-            <h2 class="text-center">
+            <h2 class="equipo text-center">
                 {{ partido[2] }}
             </h2>
 
@@ -53,7 +28,7 @@
 
     </div>
 
-    <div class="card mb-4">
+    <div class="card mb-4 partido-card">
 
         <div class="card-header">
             Nuevo Pronóstico
@@ -128,15 +103,15 @@
 
     </div>
 
-    <h3 class="mb-3">
+    <h3 class="equipo mb-3">
     Pronósticos Registrados
 </h3>
 
 <div class="table-responsive">
 
-    <table class="table table-striped table-bordered">
+    <table class="table table-dark table-bordered">
 
-        <thead class="table-dark">
+        <thead  
 
             <tr>
                 <th>Participante</th>
@@ -195,7 +170,8 @@
                 {{ e[0] }} - {{ e[1] }}
             </strong>
 
-            <span class="badge bg-primary">
+            <span class="badge"
+                style="background:#8B5CF6;font-size:1rem;">
                 {{ e[2] }}
             </span>
 
@@ -215,7 +191,7 @@
 
         {% for f in faltantes %}
 
-        <div class="card mb-2">
+        <div class="partido-card mb-2">
 
             <div class="card-body">
 
