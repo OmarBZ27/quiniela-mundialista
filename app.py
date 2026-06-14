@@ -16,7 +16,19 @@ def lista_partidos():
 
     from datetime import datetime
 
-    cursor.execute("SELECT * FROM partidos")
+    cursor.execute("""
+        SELECT
+            p.id,
+            p.local,
+            p.visitante,
+            p.fecha,
+            COALESCE(r.gol_local, 0) as gol_local,
+            COALESCE(r.gol_visitante, 0) as gol_visitante
+        FROM partidos p
+        LEFT JOIN resultados r
+            ON p.id = r.partido_id
+        ORDER BY p.fecha
+    """)
 
     partidos = cursor.fetchall()
 
@@ -30,7 +42,14 @@ def lista_partidos():
         ).strftime("%d/%m/%Y")
 
         partidos_formateados.append(
-            (p[0], p[1], p[2], fecha_bonita)
+            (
+                p[0],           # id
+                p[1],           # local
+                p[2],           # visitante
+                fecha_bonita,   # fecha
+                p[4],           # gol local
+                p[5]            # gol visitante
+            )
         )
 
     partidos = partidos_formateados
